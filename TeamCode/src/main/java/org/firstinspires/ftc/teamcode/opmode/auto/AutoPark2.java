@@ -1,38 +1,40 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
+import static com.pedropathing.api.Paths.*;
+import com.pedropathing.api.Paths;
+
+import com.pedropathing.api.PoseFactory;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
+import com.pedropathing.paths.Path;
+import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.commands.Commands.*;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
-
-import com.pedropathing.api.Paths;
-import com.pedropathing.api.PoseFactory;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.ivy.Command;
-import com.pedropathing.ivy.Scheduler;
-import com.pedropathing.math.Pose;
-import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-@Autonomous(name = "AutoPark1", group = "Autonomous")
-public class AutoPark extends LinearOpMode {
+@Autonomous(name = "AutoPark2", group = "Autonomous")
+public class AutoPark2 extends LinearOpMode {
 
     private Follower follower;
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    private final Pose start = poseFactory.of(56, 8, 90);
-    private final Pose path1 = poseFactory.of(10.4322, 97.5565, 90);
-    private final Pose path1Control1 = poseFactory.of(60.4308, 25.6377, 0);
-    private final Pose path1Control2 = poseFactory.of(6.221, 52.5996, 0);
+    private final Pose start = poseFactory.of(57.6647, 6.5434, 90);
+    private final Pose path1 = poseFactory.of(58.9168, 106.0881, 90);
+    private final Pose point2 = poseFactory.of(16.0, 106.4971, 180);
+
 
     // Autonomous routine
     public Command autoRoutine() {
         return sequential(
-            follow(follower, path1())
+            follow(follower, path1()),
+            follow(follower, path2())
         );
     }
 
@@ -64,7 +66,11 @@ public class AutoPark extends LinearOpMode {
     }
 
     public Path path1() {
-        return Paths.curve(start, path1Control1, path1Control2, path1).linear(start, path1);
+        return Paths.line(start, path1).tangent();
+    }
+
+    public Path path2() {
+        return Paths.line(path1, point2).tangent();
     }
 }
 
