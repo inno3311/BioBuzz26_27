@@ -5,6 +5,8 @@ import static com.pedropathing.ivy.commands.Commands.*;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
+//import com.bylazar.telemetry.PanelsTelemetry;
+
 import com.pedropathing.api.Paths;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -17,10 +19,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
+
 @Autonomous(name = "AutoPark1", group = "Autonomous")
 public class AutoPark extends LinearOpMode {
 
     private Follower follower;
+
+
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
@@ -53,6 +58,10 @@ public class AutoPark extends LinearOpMode {
             telemetry.addData("x", follower.pose().x());
             telemetry.addData("y", follower.pose().y());
             telemetry.addData("heading", follower.pose().heading());
+
+//            panelsTelemetry.addData("x", follower.pose().x());
+//            panelsTelemetry.addData("y", follower.pose().y());
+//            panelsTelemetry.addData("heading", follower.pose().heading());
 
             if (follower.currentPath() != null) {
                 telemetry.addData("Current path distance remaining", follower.distanceToEndpoint());
