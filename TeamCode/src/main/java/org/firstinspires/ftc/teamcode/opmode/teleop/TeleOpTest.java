@@ -4,7 +4,9 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.subsystems.DistanceSensorSS;
 
 //import com.bylazar.telemetry.PanelsTelemetry;
 //import com.bylazar.panels.telemetry.TelemetryManager;
@@ -12,7 +14,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 //import com.bylazar.telemetry;
 //import com.bylazar.telemetry.PanelsTelemetry;
 
-import com.bylazar.telemetry.PanelsTelemetry;
+//import com.bylazar.telemetry.PanelsTelemetry;
 
 @TeleOp(name = "TeleOpTest")
 public class TeleOpTest extends OpMode {
@@ -21,12 +23,23 @@ public class TeleOpTest extends OpMode {
 
     private Follower follower;
 
+    DistanceSensorSS m_distanceSensor;
+
     @Override
     public void init() {
         follower = Constants.create(hardwareMap);
 
+        m_distanceSensor = new DistanceSensorSS((this));
+
 //        TelemetryManager panelsTelemetry =
 //            PanelsTelemetry.INSTANCE.getTelemetry();
+    }
+
+    @Override
+    public void init_loop() {
+
+        telemetry.addData("Distance (IN): ", m_distanceSensor.getDistance());
+        telemetry.update();
     }
 
     @Override
