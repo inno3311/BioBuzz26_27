@@ -17,13 +17,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
-
+import org.firstinspires.ftc.teamcode.subsystems.DistanceSensorSS;
 
 
 @Autonomous(name = "SmartPark", group = "Autonomous")
 public class SmartPark extends LinearOpMode {
 
     private Follower follower;
+    DistanceSensorSS m_sensor;
 
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
@@ -35,18 +36,20 @@ public class SmartPark extends LinearOpMode {
     private final Pose parkonrightControl2 = poseFactory.of(38.0868, 123.4147, 0);
     private final Pose parkonleft = poseFactory.of(13.7581, 85.0397, 90);
 
+    Command readDistanceCommand = m_sensor.isBlockageCommand();
 
-    Command shootLaser = conditional(
-        () -> armIsRaised,
-        lowerArmCommand,
-        raiseArmCommand
-    );
+    Command chooseRoute = conditional(
+        () -> m_sensor.getSavedValue() < 20,
+        follow(follower, parkonright()),
+        follow(follower, parkonleft())
+            );
 
     // Autonomous routine
     public Command autoRoutine() {
         return sequential(
             follow(follower, inlinetopark()),
-            follow(follower, parkonright())
+            readDistanceCommand,
+            chooseRoute
         );
     }
 
@@ -57,7 +60,7 @@ public class SmartPark extends LinearOpMode {
         follower.setPose(start);
         follower.update();
 
-
+        m_sensor = new DistanceSensorSS(this);
 
 
 
