@@ -38,18 +38,20 @@ public class SmartPark extends LinearOpMode {
 
     Command readDistanceCommand = m_sensor.isBlockageCommand();
 
-    Command chooseRoute = conditional(
-        () -> m_sensor.getSavedValue() < 20,
-        follow(follower, parkonright()),
-        follow(follower, parkonleft())
-            );
+    public Command chooseRoute2() {
+        return conditional(
+              () -> m_sensor.getSavedValue() < 20,
+              follow(follower, parkonright()),
+              follow(follower, parkonleft())
+        );
+    }
 
     // Autonomous routine
     public Command autoRoutine() {
         return sequential(
             follow(follower, inlinetopark()),
             readDistanceCommand,
-            chooseRoute
+            chooseRoute2()
         );
     }
 
@@ -61,8 +63,6 @@ public class SmartPark extends LinearOpMode {
         follower.update();
 
         m_sensor = new DistanceSensorSS(this);
-
-
 
         waitForStart();
         schedule(autoRoutine());
@@ -91,6 +91,7 @@ public class SmartPark extends LinearOpMode {
     public Path parkonright() {
         return Paths.curve(inlinetopark, parkonrightControl1, parkonrightControl2, parkonright).tangent();
     }
+
     public Path parkonleft() {
         return Paths.curve(inlinetopark, parkonleft).tangent();
     }

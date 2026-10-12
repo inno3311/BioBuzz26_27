@@ -29,7 +29,12 @@ public class DistanceSensorSS
             .setExecute(() ->
             {
                 m_currentDistance = getDistance();
+            })
+            .setDone(() ->
+            {
+                return true;
             });
+
 //            .setDone(() ->
 //            {                 //Change distance requirement
 //                if (m_currentDistance < 20)
