@@ -12,9 +12,12 @@ public class DistanceSensorSS
 
     private final DistanceSensor m_distanceSensor;
 
+    private OpMode m_opMode;
+
     double m_currentDistance;
     public DistanceSensorSS(OpMode opMode) {
         m_distanceSensor = opMode.hardwareMap.get(DistanceSensor.class, "distancesensor");
+        m_opMode = opMode;
     }
 
     public double getDistance() {
@@ -29,27 +32,16 @@ public class DistanceSensorSS
             .setExecute(() ->
             {
                 m_currentDistance = getDistance();
+                m_opMode.telemetry.log().add(
+                String.format("Distance: %.2f inches", m_currentDistance));
             })
             .setDone(() ->
             {
+                m_currentDistance = getDistance();
+                m_opMode.telemetry.log().add(
+                    String.format("Done Distance: %.2f inches", m_currentDistance));
                 return true;
             });
 
-//            .setDone(() ->
-//            {                 //Change distance requirement
-//                if (m_currentDistance < 20)
-//                { //false means there is blockage within 12 inches from robot position.
-//                    return false;
-//                }
-//                else if (m_currentDistance >= 20)
-//                { //true means there is NO blockage within 12 inches from robot position
-//                    return true;
-//                }
-//                return true;
-//            });
     }
-//            .setEnd((endCondition) -> {
-//
-//            });
-
 }

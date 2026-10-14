@@ -34,13 +34,12 @@ public class SmartPark extends LinearOpMode {
     private final Pose parkonright = poseFactory.of(8.8438, 122.603, -179.0427);
     private final Pose parkonrightControl1 = poseFactory.of(52.7294, 91.5199, 0);
     private final Pose parkonrightControl2 = poseFactory.of(38.0868, 123.4147, 0);
-    private final Pose parkonleft = poseFactory.of(13.7581, 85.0397, 90);
+    private final Pose parkonleft = poseFactory.of(13.7581, 95.0397, 90);
 
-    Command readDistanceCommand = m_sensor.isBlockageCommand();
 
     public Command chooseRoute2() {
         return conditional(
-              () -> m_sensor.getSavedValue() < 20,
+              () -> m_sensor.getSavedValue() < 40,
               follow(follower, parkonright()),
               follow(follower, parkonleft())
         );
@@ -50,7 +49,7 @@ public class SmartPark extends LinearOpMode {
     public Command autoRoutine() {
         return sequential(
             follow(follower, inlinetopark()),
-            readDistanceCommand,
+            m_sensor.isBlockageCommand(),
             chooseRoute2()
         );
     }
@@ -64,7 +63,12 @@ public class SmartPark extends LinearOpMode {
 
         m_sensor = new DistanceSensorSS(this);
 
+        telemetry.log().add("waitForStart");
+
         waitForStart();
+
+        telemetry.log().add("Starting");
+
         schedule(autoRoutine());
 
         while (opModeIsActive()) {
@@ -93,7 +97,7 @@ public class SmartPark extends LinearOpMode {
     }
 
     public Path parkonleft() {
-        return Paths.curve(inlinetopark, parkonleft).tangent();
+        return Paths.line(inlinetopark, parkonleft).tangent();
     }
 
 }
