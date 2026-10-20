@@ -22,11 +22,29 @@ TankDriveHW m_tankDrive;
     @Override
     public void loop() {
 
-        double rightStick = gamepad1.right_stick_y;
+        double rightStickX = gamepad1.right_stick_x;
+        double rightStickY = gamepad1.right_stick_y; //negative value when stick is pressed forward
 
-        double leftStick = gamepad1.left_stick_y;
+        double leftPower = 0;
+        double rightPower = 0;
 
-        m_tankDrive.tankDrive(leftStick, rightStick);
+        double cutSpeed = rightStickX;
+
+        leftPower = 1.4*(rightStickY - cutSpeed);
+        rightPower = -1.4*(rightStickY + cutSpeed);
+
+
+
+        m_tankDrive.tankDrive(leftPower, rightPower);
+
+
+
+        telemetry.addData("rightStickX", gamepad1.right_stick_x);
+        telemetry.addData("rightStickY", gamepad1.right_stick_y);
+        telemetry.addData("leftPower", leftPower);
+        telemetry.addData("rightPower", rightPower);
+
+
 
         // Send real-time data back to Panels dashboard
 //        telemetry.addData("Path Busy", follower.isBusy());
