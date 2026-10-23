@@ -14,13 +14,11 @@ public class TankDriveHW
 
     TankDriveHW(OpMode opMode) {
 
-        opMode.hardwareMap.get(DcMotor.class, "leftBack");
-        opMode.hardwareMap.get(DcMotor.class, "rightBack");
-
+        leftBack = opMode.hardwareMap.get(DcMotorEx.class, "leftBack");
+        rightBack = opMode.hardwareMap.get(DcMotorEx.class, "rightBack");
 
         leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
-
 
     }
 
