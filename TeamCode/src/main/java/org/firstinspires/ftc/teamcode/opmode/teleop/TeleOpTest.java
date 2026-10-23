@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.DistanceSensorSS;
+import org.firstinspires.ftc.teamcode.subsystems.FlywheelHW;
 
 //import com.bylazar.telemetry.PanelsTelemetry;
 //import com.bylazar.panels.telemetry.TelemetryManager;
@@ -23,6 +24,8 @@ public class TeleOpTest extends OpMode {
 
     private Follower follower;
 
+    FlywheelHW m_flywheel;
+
     DistanceSensorSS m_distanceSensor;
 
     @Override
@@ -30,6 +33,7 @@ public class TeleOpTest extends OpMode {
         follower = Constants.create(hardwareMap);
 
         m_distanceSensor = new DistanceSensorSS((this));
+        m_flywheel = new FlywheelHW(this, "flywheel");
 
 //        TelemetryManager panelsTelemetry =
 //            PanelsTelemetry.INSTANCE.getTelemetry();
