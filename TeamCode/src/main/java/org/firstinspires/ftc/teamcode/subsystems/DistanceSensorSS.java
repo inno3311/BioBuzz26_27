@@ -41,7 +41,14 @@ public class DistanceSensorSS
                 m_opMode.telemetry.log().add(
                     String.format("Done Distance: %.2f inches", m_currentDistance));
                 return true;
-            });
+            })
+            //setEnd( -> {
+            //
+            //
+            //
+            // });
+
+            ;
 
     }
 }
