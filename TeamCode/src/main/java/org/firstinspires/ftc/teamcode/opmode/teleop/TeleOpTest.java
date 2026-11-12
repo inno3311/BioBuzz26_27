@@ -42,7 +42,7 @@ public class TeleOpTest extends OpMode {
     @Override
     public void init_loop() {
 
-        telemetry.addData("Distance (IN): ", m_distanceSensor.getDistance());
+//        telemetry.addData("Distance (IN): ", m_distanceSensor.getDistance());
         telemetry.update();
     }
 
