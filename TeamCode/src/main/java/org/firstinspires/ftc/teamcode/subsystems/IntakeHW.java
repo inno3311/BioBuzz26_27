@@ -50,11 +50,11 @@ public class IntakeHW
 
    public void intake()
    {
-      m_intake.setPower(-1);
+      m_intake.setPower(-1.0);
    }
    public void outtake()
    {
-      m_intake.setPower(1);
+      m_intake.setPower(1.0);
    }
 
    public void stop()

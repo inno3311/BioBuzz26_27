@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.Range;
@@ -46,6 +47,7 @@ public class Flywheel {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        motor.setDirection(DcMotorSimple.Direction.REVERSE);
         applyPIDF();
     }
 
@@ -86,7 +88,7 @@ public class Flywheel {
     }
 
     public double getCurrentVelocity() {
-        return motor.getVelocity();
+        return motor.getVelocity() * -1;
     }
 
     public double getError() {

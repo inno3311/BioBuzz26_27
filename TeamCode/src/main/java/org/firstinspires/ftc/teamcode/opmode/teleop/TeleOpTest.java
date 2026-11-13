@@ -22,7 +22,7 @@ public class TeleOpTest extends OpMode {
 
 
 
-    private Follower follower;
+    private Follower m_follower;
 
     FlywheelHW m_flywheel;
 
@@ -30,7 +30,7 @@ public class TeleOpTest extends OpMode {
 
     @Override
     public void init() {
-        follower = Constants.create(hardwareMap);
+        m_follower = Constants.create(hardwareMap);
 
         m_distanceSensor = new DistanceSensorSS((this));
         m_flywheel = new FlywheelHW(this, "flywheel");
@@ -48,19 +48,19 @@ public class TeleOpTest extends OpMode {
 
     @Override
     public void loop() {
-        follower.manual(
+        m_follower.manual(
             -gamepad1.left_stick_y,
             -gamepad1.left_stick_x,
             -gamepad1.right_stick_x
         );
 
-        follower.update();
+        m_follower.update();
 
         // Send real-time data back to Panels dashboard
-        telemetry.addData("Path Busy", follower.isBusy());
-        telemetry.addData("X", follower.pose().x());
-        telemetry.addData("Y", follower.pose().y());
-        telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
+        telemetry.addData("Path Busy", m_follower.isBusy());
+        telemetry.addData("X", m_follower.pose().x());
+        telemetry.addData("Y", m_follower.pose().y());
+        telemetry.addData("Heading", Math.toDegrees(m_follower.pose().heading()));
         telemetry.update();
     }
 }
