@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.FlywheelHW;
 import org.firstinspires.ftc.teamcode.subsystems.Flywheel;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeHW;
+import org.firstinspires.ftc.teamcode.subsystems.PollenTriggerHW;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
@@ -27,7 +28,7 @@ public class V1_TeleOp extends OpMode {
 
     IntakeHW m_intake;
 
-
+    PollenTriggerHW m_pollenServo;
     TelemetryManager panels;
 
 
@@ -39,6 +40,7 @@ public class V1_TeleOp extends OpMode {
 
         m_flywheel = new Flywheel(this.hardwareMap, "flywheel");
         m_intake = new IntakeHW(this, "intake");
+        m_pollenServo = new PollenTriggerHW(this, "pollenServo");
 
         panels = PanelsTelemetry.INSTANCE.getTelemetry();
     }
@@ -115,12 +117,25 @@ public class V1_TeleOp extends OpMode {
         {
             m_flywheel.applyPIDF();
             m_flywheel.setVelocity(Flywheel.FlyWheelConfigurables.setVel);
-            //flywheel.setRPM(4500);
+            //flywheel.setRPM(2000);
         }
         else if (gamepad1.b)
         {
             m_flywheel.stop();
         }
+
+
+
+        if (gamepad1.dpadUpWasPressed())
+        {
+            m_pollenServo.increase();
+        }
+        else if (gamepad1.dpadDownWasPressed())
+        {
+            m_pollenServo.decrease();
+        }
+
+
 
         telemetry.addData(
             "Target RPM", m_flywheel.getTargetRPM()
@@ -137,6 +152,9 @@ public class V1_TeleOp extends OpMode {
         );
         //telemetry.update();
 
+        telemetry.addData(
+            "CurPos Pollen Servo", m_pollenServo.getCurrentPos()
+        );
 
         panels.addData("curr vel", m_flywheel.getCurrentVelocity());
         panels.addData("set vel", m_flywheel.getTargetVelocity());
