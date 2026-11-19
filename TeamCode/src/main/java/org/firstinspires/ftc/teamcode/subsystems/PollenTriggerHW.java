@@ -53,7 +53,7 @@ public class PollenTriggerHW
 
    public void open()
    {
-      m_servo.setPosition(0.55);
+      m_servo.setPosition(0.8);
    }
    public void close()
    {
@@ -65,31 +65,21 @@ public class PollenTriggerHW
    }
 
    public void increase() {
-      //m_curPos = m_curPos + 0.01;
-      //m_servo.setPosition(m_curPos);
+      m_curPos = m_curPos + 0.1;
+      m_servo.setPosition(m_curPos);
 
-      open();
    }
 
    public void decrease() {
-      //m_curPos = m_curPos - 0.01;
-      //m_servo.setPosition(m_curPos);
+      m_curPos = m_curPos - 0.1;
+      m_servo.setPosition(m_curPos);
 
-      close();
    }
 
    public double getCurrentPos() {
       return m_servo.getPosition();
    }
-//   public void stop()
-//   {
-//      m_intake.setPower(0);
-//   }
-//   public double getPower()
-//   {
-//      return m_intake.getPower();
-//   }
-//
+
 
    /////////////////////////////////
    ///  Commands Functions

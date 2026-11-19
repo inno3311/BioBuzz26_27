@@ -37,18 +37,31 @@ public class Constants {
    });
 
 
-    public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
-        c.name.set("pinpoint");
-        c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-//        c.xPodOffset.set(5.16843600535956);    //strafe
-//        c.yPodOffset.set(6.7910826675535185);  // straight
-        c.xPodOffset.set(5.4);    //straight
-        c.yPodOffset.set(-6.75);  // strafe
-        c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
-        c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
-        c.globalDistanceUnit.set(DistanceUnit.INCH);
-        c.offsetUnits.set(DistanceUnit.INCH);
-    });
+//    public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
+//        c.name.set("pinpoint");
+//        c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+////        c.xPodOffset.set(5.16843600535956);    //strafe
+////        c.yPodOffset.set(6.7910826675535185);  // straight
+//        c.xPodOffset.set(5.4);    //straight
+//        c.yPodOffset.set(-6.75);  // strafe
+//        c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+//        c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+//        c.globalDistanceUnit.set(DistanceUnit.INCH);
+//        c.offsetUnits.set(DistanceUnit.INCH);
+//    });
+
+public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
+    c.name.set("pinpoint");
+    c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+//    c.xPodOffset.set(-0.953099558672567);
+//    c.yPodOffset.set(7.2361647237942925);
+    c.xPodOffset.set(-7.2361647237942925);
+    c.yPodOffset.set(0.953099558672567);
+    c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+    c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+    c.globalDistanceUnit.set(DistanceUnit.INCH);
+    c.offsetUnits.set(DistanceUnit.INCH);
+});
 
 
 

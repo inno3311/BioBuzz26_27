@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.FlywheelHW;
 import org.firstinspires.ftc.teamcode.subsystems.Flywheel;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeHW;
+import org.firstinspires.ftc.teamcode.subsystems.NectarTriggerHW;
 import org.firstinspires.ftc.teamcode.subsystems.PollenTriggerHW;
 
 import com.bylazar.telemetry.PanelsTelemetry;
@@ -29,6 +30,8 @@ public class V1_TeleOp extends OpMode {
     IntakeHW m_intake;
 
     PollenTriggerHW m_pollenServo;
+
+    NectarTriggerHW m_nectarServo;
     TelemetryManager panels;
 
 
@@ -40,7 +43,9 @@ public class V1_TeleOp extends OpMode {
 
         m_flywheel = new Flywheel(this.hardwareMap, "flywheel");
         m_intake = new IntakeHW(this, "intake");
+
         m_pollenServo = new PollenTriggerHW(this, "pollenServo");
+        m_nectarServo = new NectarTriggerHW(this, "nectarServo");
 
         panels = PanelsTelemetry.INSTANCE.getTelemetry();
     }
@@ -79,17 +84,15 @@ public class V1_TeleOp extends OpMode {
         {
             m_intake.intake();
         }
-        else if (gamepad1.right_trigger <= 0.1)
-        {
-            m_intake.stop();
-        }
-
-
-        if (gamepad1.left_trigger > 0.1)
+        else if (gamepad1.left_trigger > 0.1)
         {
             m_intake.outtake();
         }
         else if (gamepad1.left_trigger <= 0.1)
+        {
+            m_intake.stop();
+        }
+        else if (gamepad1.right_trigger <= 0.1)
         {
             m_intake.stop();
         }
@@ -117,31 +120,45 @@ public class V1_TeleOp extends OpMode {
         {
             m_flywheel.applyPIDF();
             m_flywheel.setVelocity(Flywheel.FlyWheelConfigurables.setVel);
-            //flywheel.setRPM(2000);
+
         }
-        else if (gamepad1.b)
+        else if (gamepad1.x)
         {
             m_flywheel.stop();
         }
 
 
-
         if (gamepad1.dpadUpWasPressed())
         {
-            m_pollenServo.increase();
+            m_nectarServo.increase();
         }
         else if (gamepad1.dpadDownWasPressed())
         {
-            m_pollenServo.decrease();
+            m_nectarServo.decrease();
+        }
+
+        //Pollen launch
+        if (gamepad1.y) {
+            m_pollenServo.open();
+        }
+        else {
+            m_pollenServo.close();
+        }
+
+        //Nectar launch
+        if (gamepad1.b) {
+            m_nectarServo.open();
+        }
+        else {
+            m_nectarServo.close();
         }
 
 
-
         telemetry.addData(
-            "Target RPM", m_flywheel.getTargetRPM()
+            "Target Vel", m_flywheel.getTargetRPM()
         );
         telemetry.addData(
-            "Actual RPM", m_flywheel.getRPM()
+            "Actual Vel", m_flywheel.getRPM()
         );
         telemetry.addData(
             "Velocity Error", m_flywheel.getError()
@@ -152,9 +169,8 @@ public class V1_TeleOp extends OpMode {
         );
         //telemetry.update();
 
-        telemetry.addData(
-            "CurPos Pollen Servo", m_pollenServo.getCurrentPos()
-        );
+        telemetry.addData("CurPos Pollen trigger", m_pollenServo.getCurrentPos());
+        telemetry.addData("CurPos Nectar trigger", m_nectarServo.getCurrentPos());
 
         panels.addData("curr vel", m_flywheel.getCurrentVelocity());
         panels.addData("set vel", m_flywheel.getTargetVelocity());

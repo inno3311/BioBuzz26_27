@@ -24,7 +24,7 @@ public class Flywheel {
     @Configurable
     public static class FlyWheelConfigurables {
         @Sorter(sort = 0)
-        public static double p = 0.0;
+        public static double p = 0.5;
 
         @Sorter(sort = 1)
         public static double i = 0.0;
@@ -33,9 +33,9 @@ public class Flywheel {
         public static double d = 0.0;
 
         @Sorter(sort = 3)
-        public static double f = 12.0;
+        public static double f = 15.0;
 
-        public static double setVel = 1400;
+        public static double setVel = 1500;
     }
 
     private double targetVelocity = 0.0;
