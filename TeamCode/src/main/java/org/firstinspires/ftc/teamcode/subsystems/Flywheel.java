@@ -38,7 +38,7 @@ public class Flywheel {
         public static double setVel = 1500;
     }
 
-    private double targetVelocity = 0.0;
+    //private double targetVelocity = 0.0;
 
     public Flywheel(HardwareMap hardwareMap, String motorName) {
         motor = hardwareMap.get(DcMotorEx.class, motorName);
@@ -53,8 +53,8 @@ public class Flywheel {
 
     // Set target speed in encoder ticks per second
     public void setVelocity(double ticksPerSecond) {
-        targetVelocity = Math.max(0, ticksPerSecond);
-        motor.setVelocity(targetVelocity);
+        Flywheel.FlyWheelConfigurables.setVel = Math.max(0, ticksPerSecond);
+        motor.setVelocity(Flywheel.FlyWheelConfigurables.setVel);
     }
 
     // Set speed in RPM, assuming the encoder reports motor-shaft RPM
@@ -63,7 +63,7 @@ public class Flywheel {
     }
 
     public void stop() {
-        targetVelocity = 0;
+        //Flywheel.FlyWheelConfigurables.setVel = 0;
         motor.setVelocity(0);
     }
 
@@ -84,7 +84,7 @@ public class Flywheel {
     }
 
     public double getTargetVelocity() {
-        return targetVelocity;
+        return Flywheel.FlyWheelConfigurables.setVel;
     }
 
     public double getCurrentVelocity() {
@@ -92,16 +92,23 @@ public class Flywheel {
     }
 
     public double getError() {
-        return targetVelocity - motor.getVelocity();
+        return Flywheel.FlyWheelConfigurables.setVel - motor.getVelocity();
     }
 
+    public void increaseVelocity() {
+        Flywheel.FlyWheelConfigurables.setVel += 50;
+    }
+
+    public void decreaseVelocity() {
+        Flywheel.FlyWheelConfigurables.setVel -= 50;
+    }
     public double getRPM() {
         return motor.getVelocity() * 60.0
             / motor.getMotorType().getTicksPerRev();
     }
 
     public double getTargetRPM() {
-        return targetVelocity * 60.0
+        return Flywheel.FlyWheelConfigurables.setVel * 60.0
             / motor.getMotorType().getTicksPerRev();
     }
 

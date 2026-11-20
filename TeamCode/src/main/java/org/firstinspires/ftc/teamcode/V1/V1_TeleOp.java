@@ -97,7 +97,7 @@ public class V1_TeleOp extends OpMode {
             m_intake.stop();
         }
 
-        telemetry.addData("intakePower", m_intake.getPower());
+        //telemetry.addData("intakePower", m_intake.getPower());
 
 
         m_follower.manual(
@@ -113,29 +113,38 @@ public class V1_TeleOp extends OpMode {
         telemetry.addData("X", m_follower.pose().x());
         telemetry.addData("Y", m_follower.pose().y());
         telemetry.addData("Heading", Math.toDegrees(m_follower.pose().heading()));
-        telemetry.update();
+        //telemetry.update();
 
 
-        if (gamepad1.a)
+        //start and stop flywheel
+        if (gamepad2.a)
         {
             m_flywheel.applyPIDF();
             m_flywheel.setVelocity(Flywheel.FlyWheelConfigurables.setVel);
-
         }
-        else if (gamepad1.x)
+        else if (gamepad2.x)
         {
             m_flywheel.stop();
         }
 
+        //Adjust speed of flywheel
+        if (gamepad2.dpadUpWasPressed())
+        {
+            m_flywheel.increaseVelocity();
+        }
+        else if (gamepad2.dpadDownWasPressed())
+        {
+            m_flywheel.decreaseVelocity();
+        }
 
-        if (gamepad1.dpadUpWasPressed())
-        {
-            m_nectarServo.increase();
-        }
-        else if (gamepad1.dpadDownWasPressed())
-        {
-            m_nectarServo.decrease();
-        }
+//        if (gamepad1.dpadUpWasPressed())
+//        {
+//            m_nectarServo.increase();
+//        }
+//        else if (gamepad1.dpadDownWasPressed())
+//        {
+//            m_nectarServo.decrease();
+//        }
 
         //Pollen launch
         if (gamepad1.y) {
@@ -155,18 +164,15 @@ public class V1_TeleOp extends OpMode {
 
 
         telemetry.addData(
-            "Target Vel", m_flywheel.getTargetRPM()
+            "Target Vel", m_flywheel.getTargetVelocity()
         );
         telemetry.addData(
-            "Actual Vel", m_flywheel.getRPM()
+            "Actual Vel", m_flywheel.getCurrentVelocity()
         );
         telemetry.addData(
             "Velocity Error", m_flywheel.getError()
         );
 
-        telemetry.addData(
-            "Target Velocity", m_flywheel.getTargetVelocity()
-        );
         //telemetry.update();
 
         telemetry.addData("CurPos Pollen trigger", m_pollenServo.getCurrentPos());

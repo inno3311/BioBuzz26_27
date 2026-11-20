@@ -51,7 +51,7 @@ public class NectarTriggerHW
 
    public void open()
    {
-      m_servo.setPosition(0.2);
+      m_servo.setPosition(0.25);
    }
    public void close()
    {

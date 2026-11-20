@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static com.pedropathing.ivy.commands.Commands.instant;
+
+import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -70,6 +73,9 @@ public class IntakeHW
    /////////////////////////////////
    ///  Commands Functions
    /////////////////////////////////
+
+   Command startIntakeCommand = instant(this::intake);
+
 
 
 }
